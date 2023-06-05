@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+    
+{% block body %}
+    <h2>Page TEST</h2>
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <div>footer de test.html.twig</div>
+        <div>{% block articles %}
+            Pas d'articles
+        {% endblock %}</div>    
+    </footer>
+    
+{% endblock %}
