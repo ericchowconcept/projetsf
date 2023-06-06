@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,12 +53,29 @@ class TestController extends AbstractController
         ]);
     }
 
-    #[Route('test/new', name:'test_create')]
-    public function form()
+    #[Route('test/new', name:'test_new')]
+    public function form(Request $globals, EntityManagerInterface $manager)
     {
-        $form = $this->createForm(ArticleType::class);
+        // *je crée un objet Article vide prêt être rempli
+        $article= new Article;
+        $form = $this->createForm(ArticleType::class, $article);//*je lie le formulaire à mon objet $article
         // *createForm() permet de récuperer le formulaire
-        
+
+        // dd($globals);
+
+        $form->handleRequest($globals);
+        // *handleRequest() permet d'inserer les données du formulaire dans l'objet $article
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $article->setCreatedAt(new \DateTimeImmutable); 
+            $manager->persist($article);
+            $manager->flush();
+            return $this->redirectToRoute("test_show", [
+                'id' => $article->getId()
+            ]);
+        }
+
         return $this->renderForm('test/form.html.twig',[
             'formArticle' => $form
         ]);
