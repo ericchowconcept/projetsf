@@ -55,7 +55,10 @@ class TestController extends AbstractController
     {
         $form = $this->createForm(ArticleType::class);
         // *createForm() permet de récuperer le formulaire
-        return $this->renderForm('test/form.html.twig');
+        
+        return $this->renderForm('test/form.html.twig',[
+            'formArticle' => $form
+        ]);
     }
 
 

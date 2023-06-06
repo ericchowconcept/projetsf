@@ -3,7 +3,23 @@
 {% block title %}Ajouter Article{% endblock %}
 
 {% block body %}
- <h2>Ajout article</h2>
+    <h2>Ajout article</h2>
+    <div class="container">
+        {{ form_start(formArticle) }}
 
+        {{ form_row(formArticle.title, {
+            label:"Titre",
+            attr:{
+                placeholder:"Titre de l'article"
+            }
+        }) }}
+
+        {{ form_row(formArticle.image) }}
+
+        {{ form_row(formArticle.content) }}
+
+        <button type="submit" class="btn btn-primary mt-2">Ajouter</button>
+        {{ form_end(formArticle) }}
+    </div>
 
 {% endblock %}
