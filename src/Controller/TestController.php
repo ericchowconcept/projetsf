@@ -27,6 +27,24 @@ class TestController extends AbstractController
         ]);
     }
 
+    #[Route('/', name:'home')]
+    public function home() :Response
+    {
+     
+      return $this->render('test/home.html.twig', ['age' => 35]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     #[Route('/test/salut')]
     public function salut()
     {

@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Accueil{% endblock %}
+{% block body %}
+
+<h1>Bienvenue sur mon site test</h1>
+
+{% if age>=18 %}
+    <p>Tu es majeur</p>
+{% else %}
+    <p>Tu es mineur</p>    
+{% endif %}
+
+
+{% set str = "j'ai un ordinateur" %}
+
+{% if str starts with "j'ai" %}
+    <p>c'est vrai</p>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
