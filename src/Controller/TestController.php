@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,20 +11,25 @@ use Symfony\Component\Routing\Annotation\Route;
  * *Plusieurs méthodes de la classe AbstractController retourn un objet Response
  * *(render, json..........)
  */
-class TestController extends AbstractController
-{
-    #[Route('/test', name: 'app_test')]
-    public function index(): Response
-    {
-        /**
+
+
+  /**
          * *La méthode render va générer l'affichage qui va être envoyé au client
          * *le 1er argument  (obligatoire) est le nom du fichier utilisé pour générer l'affichage.
          * * Quand on utilise TWIG, le nom du fichier est toujours donné à partir du dossier 'templates'
          * 
          * *le 2ème argument (optionel) est de type array. il contient les variables que l'on veut passer à la vue
          */
+class TestController extends AbstractController
+{
+    // *on met en paramètre notre repository de l'entité article qu'on stock dans la variable $repo (Article $repo)
+    #[Route('/test', name: 'app_test')]
+    public function index(ArticleRepository $repo): Response
+    {
+    //    *on stock dans la variable $articles le tableau de données récupéré grace à la méthode findAll de l'objet $repo
+         $article =$repo->findAll();
         return $this->render('test/index.html.twig', [
-            'controller_name' => 'TestController',
+            'articles' => $article,
         ]);
     }
 
@@ -33,13 +39,6 @@ class TestController extends AbstractController
      
       return $this->render('test/home.html.twig', ['age' => 35]);
     }
-
-
-
-
-
-
-
 
 
 

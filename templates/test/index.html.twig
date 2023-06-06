@@ -1,20 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TestController!{% endblock %}
+{% block title %}Mes articles{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/projetsf/src/Controller/TestController.php'|file_link(0) }}">src/Controller/TestController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/projetsf/templates/test/index.html.twig'|file_link(0) }}">templates/test/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <section class="row">
+    {#? Il y'a pas de foreach on parcourt le tableau avec la fonction for de twig #}
+    {#? L'argument avant le in est la valeure à chaque tour de boucle  #}
+    {#? L'argument après le in est le tableai a parcourir #}
+    {% for item in articles %}
+        <article class="col-md-4 mx-auto text-center border border-dark">
+            <h2>{{ item.title }}</h2>
+            <div class="metadata">Ecrit le {{ item.createdAt|date('m/d/Y à H:i:s') }} dans la catégorie Politique</div>
+            <div class="content">
+                <img src="{{ item.image }}" alt="">
+                <a href="#" class="btn btn-primary">Lire la suite</a>
+            </div>
+        </article>
+    {% endfor %}
+    </section>
 {% endblock %}
