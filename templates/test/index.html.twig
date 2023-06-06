@@ -13,7 +13,7 @@
             <div class="metadata">Ecrit le {{ item.createdAt|date('m/d/Y à H:i:s') }} dans la catégorie Politique</div>
             <div class="content">
                 <img src="{{ item.image }}" alt="">
-                <a href="#" class="btn btn-primary">Lire la suite</a>
+                <a href="{{ path('test_show', {id: item.id}) }}" class="btn btn-primary">Lire la suite</a>
             </div>
         </article>
     {% endfor %}

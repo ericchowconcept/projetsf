@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TestController extends AbstractController
 {
     // *on met en paramètre notre repository de l'entité article qu'on stock dans la variable $repo (Article $repo)
-    #[Route('/test', name: 'app_test')]
+    #[Route('/test', name: 'test')]
     public function index(ArticleRepository $repo): Response
     {
     //    *on stock dans la variable $articles le tableau de données récupéré grace à la méthode findAll de l'objet $repo
@@ -40,7 +40,14 @@ class TestController extends AbstractController
       return $this->render('test/home.html.twig', ['age' => 35]);
     }
 
-
+    #[Route('/test/show/{id}', name:'test_show')]
+    public function show($id, ArticleRepository $repo)
+    {
+        $article = $repo->find($id);
+        return $this->render('test/show.html.twig', [
+            'article' => $article,
+        ]);
+    }
 
 
 
