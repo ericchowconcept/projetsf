@@ -33,9 +33,15 @@ class ExerciceController extends AbstractController
      */
 
     #[Route('/exercice/add', name:'add_voiture')]
-    public function form(Request $globals, EntityManagerInterface $manager)
+    // *Nouvelle route pour un modifier même si c'est dans la même page
+    #[Route('/exercice/update/{id}', name:'exercice_update')]
+    public function form(Request $globals, EntityManagerInterface $manager, Voiture $voiture=null)
     {
-        $voiture = new Voiture;
+        if($voiture == null)
+        {
+            $voiture = new Voiture;
+        }
+
         $formVoiture = $this->createForm(VoitureType::class, $voiture);
         $formVoiture->handleRequest($globals);
 
@@ -48,10 +54,51 @@ class ExerciceController extends AbstractController
         
 
         return $this->renderForm('exercice/form.html.twig',[
-            "formVoiture" => $formVoiture
+            "formVoiture" => $formVoiture,
+            "editMode" => $voiture->getId() !==null
+            
         ]);
     }
+    #[Route('/exercice/delete/{id}', name :"exercice_delete")]
+    public function delete(Voiture $voiture, EntityManagerInterface $manager)
+    {
+        $manager->remove($voiture);
+        $manager->flush();
+        return $this->redirectToRoute('exercice');
+    }
+
+    
 }
+
+/******
+ * 
+ *!Supprimer
+ */
+
+/****#######################################
+ * ! Modifier
+ * *Nouvelle route pour un modifier même si c'est dans la même page
+ #[Route('/exercice/update/{id}', name:'exercice_update')]
+ public function form(Request $globals, EntityManagerInterface $manager, Voiture $voiture=null)
+ **si voiture n'est pas null
+ if($voiture ==null)
+        {
+            $voiture = new Voiture;
+        }
+
+**un boolean dans le render
+ return $this->renderForm('exercice/form.html.twig',[
+            "formVoiture" => $formVoiture,
+            "editMode" => $voiture->getId() !==null
+            
+        ]);
+
+
+
+ */
+
+
+//##########################################################################################
 
 /**
  * *Créer une variable pour stocker une methode afin de créer le tableau 

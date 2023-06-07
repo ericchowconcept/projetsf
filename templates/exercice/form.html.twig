@@ -4,6 +4,14 @@
 
 
 {% block body %}
+{% if editMode %}
+<h2 class="text-center">Modifier la voiture</h2>
+{% else %}
+<h2 class="text-center">Ajouter la voiture</h2>
+{% endif %}
+
+
+
 <div class="container">
 {{ form_start(formVoiture) }}
 
