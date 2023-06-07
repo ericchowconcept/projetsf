@@ -45,23 +45,34 @@ class TestController extends AbstractController
     }
 
     #[Route('/test/show/{id}', name:'test_show')]
-    public function show($id, ArticleRepository $repo)
+    // public function show($id, ArticleRepository $repo)
+    public function show(Article $article)
     {
-        $article = $repo->find($id);
+        // $article = $repo->find($id);
         return $this->render('test/show.html.twig', [
             'article' => $article,
         ]);
     }
 
     #[Route('test/new', name:'test_new')]
-    public function form(Request $globals, EntityManagerInterface $manager)
+    #[Route('test/edit/{id}', name:'test_edit')]
+    public function form(Request $globals, EntityManagerInterface $manager, ArticleRepository $repo, $id = null)
     {
+
         // *je crée un objet Article vide prêt être rempli
-        $article= new Article;
+        if($id == null)
+        {
+          $article= new Article;  
+        }else{
+        
+            $article = $repo->find($id);
+        }
+        
         $form = $this->createForm(ArticleType::class, $article);//*je lie le formulaire à mon objet $article
         // *createForm() permet de récuperer le formulaire
 
         // dd($globals);
+
 
         $form->handleRequest($globals);
         // *handleRequest() permet d'inserer les données du formulaire dans l'objet $article
@@ -77,8 +88,18 @@ class TestController extends AbstractController
         }
 
         return $this->renderForm('test/form.html.twig',[
-            'formArticle' => $form
+            'formArticle' => $form,
+            'editMode' => $article->getId() !==null,
         ]);
+    }
+
+    #[Route('/test/delete/{id}', name:"test_delete" )]
+    public function delete($id, EntityManagerInterface $manager, ArticleRepository $repo)
+    {
+        $article = $repo->find($id);
+        $manager->remove($article);
+        $manager->flush();
+        return $this->redirectToRoute("test");
     }
 
 

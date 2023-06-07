@@ -8,10 +8,14 @@
         <h2>{{ article.title }}</h2>
         <div class="metadata">Ecrit le {{ article.createdAt|date('m/d/Y à H:i:s') }} dans la catégorie Politique</div>
         <div class="content">
-        <img src="{{ article.image }}" alt=""></article>
-        <br>
-        {{ article.content|raw }}
+            <img src="{{ article.image }}" alt=""></article>
+            <br>
+            {{ article.content|raw }}
         </div>
+
+        <a href="{{ path('test_edit', {id: article.id}) }}" class="btn btn-warning">Modifier</a>
+        <a href="{{ path('test_delete', {id: article.id}) }}" class="btn btn-danger">Supprimer</a>
+     </article>   
 </section>
 
 

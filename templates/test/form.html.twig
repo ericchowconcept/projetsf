@@ -1,11 +1,25 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Ajouter Article{% endblock %}
+{% block title %}
+{% if editMode %}Modifier Article{% else %}Ajouter Article{% endif %}{% endblock %}
 
 {% block body %}
+{% if editMode %}
+
+    <h2>Modifier l'article</h2>
+
+{% else %}
+    
     <h2>Ajout article</h2>
+{% endif %}
+
+    
     <div class="container">
-        {{ form_start(formArticle) }}
+        {{ form_start(formArticle, {
+            attr:{
+                novalidate: "novalidate"
+            }
+        }) }}
 
         {{ form_row(formArticle.title, {
             label:"Titre",
@@ -18,7 +32,13 @@
 
         {{ form_row(formArticle.content) }}
 
-        <button type="submit" class="btn btn-primary mt-2">Ajouter</button>
+        <button type="submit" class="btn btn-primary mt-2">
+        {% if editMode %}
+        Modifier
+        {% else %}
+        Ajouter
+        {% endif %}
+        </button>
         {{ form_end(formArticle) }}
     </div>
 

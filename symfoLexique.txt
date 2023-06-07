@@ -1,0 +1,49 @@
+
+###########################  VOCABULAIRE ET COMMANDES INCONTOURNABLES DE SYMFONY ###################################
+
+ORM : Un mapping objet-relationnel (en anglais object-relational mapping ou ORM) est un type de programme informatique qui se place en interface
+ entre un programme applicatif et une base de données relationnelle pour simuler une base de données orientée objet. Chez Symfony : ORM=DOCTRINE.
+
+Donc tout ce qui est en liens avec la base de donnée pour la création, la modification, la suppression appelle des classes de doctrine et des méthodes de ces classe
+
+Les Controller : Permettent d'interpréter la requête HTPP éffectuée via l'URL. Et renvoie à Twig, à la vue les informations demandées
+
+Les Entity: Représentent une table de la base de donnée, chacune des propriété de l'entité représente un champs de la table avec toutes les spécifications de ce champs.
+Donc en liens direct avec DOCTRINE. C'est ici que l'on défini les contraintes telles que le fait qu'elle ne soit pas null, minimum de caractère, maximum aussi, controle du type
+et gestion des messages renvoyé si non respecté
+
+Les Repository: Représentent les requêtes de SELECT affiliées aux entités. permettent ainsi de récupérer chaque insertion en BDD.
+grace à des méthodes find(), findAll(), findBy() ...
+
+Les Type: ou formType, génèrent des formumlaires en liens avec une entité chaques propriétés de l'entité représente un input généré par le type.
+On peux y définir les contraintes aussi, mais sert surtout à customiser les input, pour gérer le type d'input, les labels, et les attributs (placeholder, class, id ...)
+
+######   les injections de dépendances à connaitre :  #############
+disons une table Produit:
+
+# Produit $produit => use App\Entity\Produit;  à appeler lors d'une création, modification ou suppression en l'occurence d'un produit
+
+# ProduitRepository $repoProduit => use App\Repository\ProduitRepository; à appeler pour une éffectuer requête en BDD et la transmettre à la Vue  (SELECT )
+C'est un répertoire de tout les inserts en BDD.
+
+# Request $request => use Symfony\Component\HttpFoundation\Request; à appeler pour obtenir les information d'une superglobale provenant de la vue 
+($_GET=>$request->query(), $_POST=>$request->request(), $_SESSION=>$request->getSession(), $_FILE=>$request->getData(), $_COOKIE=>$request->cookie() ...)
+
+# EntityManagerInterface $manager => use Doctrine\ORM\EntityManagerInterface; à appeler executer une insertion, modification ou suppression. C'est lui qui va binder les
+value et préparer les requêtes avant de les éxécuter
+
+############## Les commandes à connaitre #######################
+
+	php bin/console doctrine:database:create   ->après config de la BDD en .env permet de créer la BDD
+	php bin/console make:controller ->Créé un controller avec sa fonction index et une vue de cette fonction en twig classée dans un dossier du même nom que le controller  
+	php bin/console make:entity ->Créé une table de BDD sous forme d'objet avec chaque propriété représentant un champs, gère les relations, types, longueur, 
+				      le fait que le champs soit nullable ou non. A l'issu: il génére l'entité ainsi que le repository correspondant à l'entité afin de pouvoir
+				      y accéder
+	php bin/console make:form  ->créé un formulaire en liens direct avec une entité. une propriété de l'entité->un champs de formulaire 
+				     soit un champs de table en BDD donne un input (On peut ainsi ensuite utiliser les propriétés de form telles que: createForm(FormType::class, Entity)=>créé le formulaire
+																		      handleRequest($request)=>récupère les données du formulaire 
+																		      createView()=>créé une vue du formulaire pour la Twig
+	php bin/console make:migration  ->génére un fichier de migration des entitées créées ou mofifiées qui n'est autre qu'une suite de requête d'insertion ou de modification
+	php bin/console doctrine:migrations:migrate ->éxécute les migrations générées dans la base de donnée via l'ORM DOCTRINE
+	php bin/console doctrine:schema:update --force ->éxécute une mise à jour de la base de donnée sans nécessiter de migration. Lecture instantanée des entités et requête éxécuté directement en BDD (Déconseillé)
+	
