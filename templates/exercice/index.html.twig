@@ -5,19 +5,34 @@
 {% block body %}
 <h1>Mes voitures</h1>
 <div class="container">
-    <table>
+    <table class="table table-dark">
+    <thead>
         <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th>#</th>
+            <th>Marque</th>
+            <th>Modèle</th>
+            <th>Prix</th>
+            <th>Description</th>
+            <th>Option</th>
         </tr>
+    </thead>
+    <tbody>
+    {% for item in voitures %}
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr> 
+            <td>{{ item.id }}</td>
+            <td>{{ item.marque }}</td>
+            <td>{{ item.modele }}</td>
+            <td>{{ item.prix }}</td>
+            <td>{{ item.description }}</td>
+            <td>
+                <a href="#" class="btn btn-warning">Modifier</a>
+                <a href="#" class="btn btn-danger">Supprimer</a>
+            </td>
+        </tr>
+    {% endfor %}
+         
+    </tbody>
     </table>
+    
 </div>
 {% endblock %}

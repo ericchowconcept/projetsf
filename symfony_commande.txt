@@ -15,10 +15,12 @@ php bin/console make:entity ->Créé une table de BDD sous forme d'objet avec ch
 				      le fait que le champs soit nullable ou non. A l'issu: il génére l'entité ainsi que le repository correspondant à l'entité afin de pouvoir
 				      y accéder
 
-php bin/console make:form  ->créé un formulaire en liens direct avec une entité. une propriété de l'entité->un champs de formulaire 
-				     soit un champs de table en BDD donne un input (On peut ainsi ensuite utiliser les propriétés de form telles que: createForm(FormType::class, Entity)=>créé le formulaire
-																		      handleRequest($request)=>récupère les données du formulaire 
-																		      createView()=>créé une vue du formulaire pour la Twig
+php bin/console make:form  ->créé un formulaire en liens direct avec une entité. 
+							une propriété de l'entité->un champs de formulaire soit un champs de table en BDD donne un input 
+					 
+					 (On peut ainsi ensuite utiliser les propriétés de form telles que: createForm(FormType::class, Entity)
+					 =>créé le formulaire handleRequest($request)
+					 =>récupère les données du formulaire createView()=>créé une vue du formulaire pour la Twig
 
 php bin/console make:migration  ->génére un fichier de migration des entitées créées ou mofifiées qui n'est autre qu'une suite de requête d'insertion ou de modification
 
