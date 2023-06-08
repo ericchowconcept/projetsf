@@ -1,6 +1,12 @@
+Démarrage et création du projet:
 
-composer create-project symfony/skeleton:"^5.4" nom_du_projet : créer un projet symfony en version 5.4 (version LTS, voir symfony.com/releases)
-puis cd nom_du_projet et composer require webapp
+avec la CLI : 
+symfony new annuaire_des_salaries --version=5.4  --webapp
+
+sans la CLI
+composer create-project symfony/skeleton:"^5.4" nom_du_projet 
+	- créer un projet symfony en version 5.4 (version LTS, voir symfony.com/releases)
+	- puis cd nom_du_projet et composer require webapp
 
 
 1.)Lancer un serveur local sur le port 8000 (pour arrêter le serveur, faire CTRL + C)
@@ -21,9 +27,9 @@ puis cd nom_du_projet et composer require webapp
 	- php bin/console doctrine:migrations:migrate d:m:m	
  		->éxécute les migrations générées dans la base de donnée via l'ORM DOCTRINE
 
-#######################################################*****En cas d'urgence****###############################################################################################
+#######################################################*****En cas d'urgence****###########################################################################
 #
-	php bin/console doctrine:schema:update --force ->éxécute une mise à jour de la base de donnée sans nécessiter de migration. Lecture instantanée des entités et requête éxécuté directement en BDD (Déconseillé)
+#	 php bin/console doctrine:schema:update --force ->éxécute une mise à jour de la base de donnée sans nécessiter de migration. Lecture instantanée des entités et requête éxécuté directement en BDD (Déconseillé)
 #
 ###################################################################################################################################################################################
 
@@ -50,7 +56,7 @@ puis cd nom_du_projet et composer require webapp
 
 4.b)Si je souhaite que mon formulaire utilise bootstrap, il faut ajouter dans le twig.yaml dans config
 	- form_themes: ['bootstrap_5_layout.html.twig']	
-	
+
 twig:
     default_path: '%kernel.project_dir%/templates'
     form_themes: ['bootstrap_5_layout.html.twig']					 

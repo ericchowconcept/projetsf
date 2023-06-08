@@ -99,8 +99,7 @@ class ExerciceController extends AbstractController
 //##########################################################################################
 
 /**
- * *Créer une variable pour stocker une methode afin de créer le tableau 
- * *$form = $this->createForm(xxxType::class)
+ * *Créer une variable pour stocker une methode afin de créer le tableau : $form = $this->createForm(xxxType::class)
  *  $formVoiture = $this->createForm(VoitureType::class);
         
 
