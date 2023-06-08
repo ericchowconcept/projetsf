@@ -22,18 +22,19 @@ class ExerciceController extends AbstractController
         ]);
     }
 
-    /***
+    /****
+     * *#####Pour afficher #####
      * *Ajouter le repository et importer la classe
      *  public function index(VoitureRepository $repo): Response
      * *appelle la methode findAll
      * $voiture = $repo->findAll();
      * return $this->render('exercice/index.html.twig', [
-            'voiture' => $voiture,
+            'voitures' => $voiture,
         ]);
+        **Donner une variable qui je dois utiliser dans la page de vue(ici on utilise "voitures")
      */
 
     #[Route('/exercice/add', name:'add_voiture')]
-    // *Nouvelle route pour un modifier même si c'est dans la même page
     #[Route('/exercice/update/{id}', name:'exercice_update')]
     public function form(Request $globals, EntityManagerInterface $manager, Voiture $voiture=null)
     {
@@ -59,25 +60,11 @@ class ExerciceController extends AbstractController
             
         ]);
     }
-    #[Route('/exercice/delete/{id}', name :"exercice_delete")]
-    public function delete(Voiture $voiture, EntityManagerInterface $manager)
-    {
-        $manager->remove($voiture);
-        $manager->flush();
-        return $this->redirectToRoute('exercice');
-    }
 
-    
-}
-
-/******
- * 
- *!Supprimer
- */
-
-/****#######################################
+    /****#######################################
  * ! Modifier
- * *Nouvelle route pour un modifier même si c'est dans la même page
+ * *Nouvelle route pour <<modifier>> même si c'est dans la même page, n'oublie pas le paramètre en GET dans l'url
+ * *!On requit un bundle pour utiliser la variable à place $id 
  #[Route('/exercice/update/{id}', name:'exercice_update')]
  public function form(Request $globals, EntityManagerInterface $manager, Voiture $voiture=null)
  **si voiture n'est pas null
@@ -92,10 +79,21 @@ class ExerciceController extends AbstractController
             "editMode" => $voiture->getId() !==null
             
         ]);
-
-
-
  */
+
+    #[Route('/exercice/delete/{id}', name :"exercice_delete")]
+    public function delete(Voiture $voiture, EntityManagerInterface $manager)
+    {
+        $manager->remove($voiture);
+        $manager->flush();
+        return $this->redirectToRoute('exercice');
+    }
+
+    
+}
+
+
+
 
 
 //##########################################################################################
@@ -113,8 +111,12 @@ class ExerciceController extends AbstractController
     **Ajouter le Request $globals et Entitymanager $manager
      public function form(Request $globals, EntityManagerInterface $manager)
 
-     **Istancier le builder et ajouter proceder à handleRequest
-     $voiture = new Voiture;
+    **stocker entity(une table) dans une variable en créant un objet Voiture
+        
+        $voiture = new Voiture;
+    
+    **Istancier le builder -> Importer la classe(clique droit) -> proceder à handleRequest
+
         $formVoiture = $this->createForm(VoitureType::class, $voiture);
         $formVoiture->handleRequest($globals);
         
